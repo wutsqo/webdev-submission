@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% load static %}
+<!---->
+{% block meta %}
+<title>Blog App</title>
+{% endblock meta %} {% block content %}
+<div class="container py-5" style="max-width: 650px">
+  {% include 'main/messages.html' %}
+  <div class="row">
+    <div class="col">
+      <h3>Login</h3>
+      <p>no account? <a href="/register">register</a></p>
+      <hr />
+      <form method="post">
+        {% csrf_token %} {{form|crispy}}
+        <br />
+        <button type="submit" class="btn btn-sm btn-primary">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

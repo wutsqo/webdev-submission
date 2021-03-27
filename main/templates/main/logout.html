@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% load static %} &nbsp; {% block meta %}
+<title>Story 9</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="{% static 'css/story9.css' %}" />
+{% endblock meta %} {% block content %} {% include 'main/messages.html' %}
+<div class="container">
+  <div class="card p-4">
+    <legend>You have successfully signed out</legend>
+    <div class="card-footer text-center">
+      <small><a href="{% url 'main:login' %}">Log in again?</a> </small>
+    </div>
+  </div>
+</div>
+{% endblock content %} {% block scripts %} {% endblock scripts %}

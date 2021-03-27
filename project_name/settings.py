@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "main",
     "tinymce",
+    "crispy_forms",
 ]
 
 MIDDLEWARE = [
@@ -136,7 +137,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Jakarta"
 
 USE_I18N = True
 
@@ -169,3 +170,9 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 TINYMCE_JS_URL = "https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"
 TINYMCE_COMPRESSOR = False
+
+from django.urls import reverse_lazy
+
+LOGIN_REDIRECT_URL = reverse_lazy("main:home")
+LOGIN_URL = reverse_lazy("main:login")
+LOGOUT_URL = reverse_lazy("main:logout")
