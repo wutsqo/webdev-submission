@@ -12,4 +12,5 @@ urlpatterns = [
     path(
         "logout/", LogoutView.as_view(template_name="main/logout.html"), name="logout"
     ),
+    path("new/", views.add_post, name="new"),
 ]

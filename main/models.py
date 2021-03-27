@@ -7,7 +7,7 @@ import readtime
 
 class Post(models.Model):
     title = models.CharField(max_length=500)
-    short_desc = models.CharField(max_length=100, default="no description")
+    short_desc = models.CharField(max_length=500, default="no description")
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
     content = HTMLField()
