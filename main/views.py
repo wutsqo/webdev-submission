@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from .forms import PostForm
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 
 
 def home(request):
@@ -108,3 +109,12 @@ def delete(request):
             post.delete()
 
     return redirect("main:dashboard")
+
+
+def add_comment(request):
+    if request.method == "POST":
+        id = request.POST.get("id")
+        post = Post.objects.get(id=id)
+        content = request.POST.get("content")
+        Comment.objects.create(post=post, content=content)
+    return HttpResponseRedirect(request.META.get("HTTP_REFERER"))

@@ -20,13 +20,12 @@
   <div>
     <h4>Comments</h4>
     <br />
-    {% if comments %} {% for comment in comments %}
+    {% if comments %} {% for comment in post.comments.all %}
     <div class="card">
       <div class="card-body">
         <small>
           <i class="fas fa-clock"></i> &nbsp;
-          {{comment.date_created|naturaltime}} - {% if comment.account %} User
-          {% else %} Anon {% endif %}
+          {{comment.date_created|naturaltime}}
         </small>
         <hr />
         <p>{{comment.content}}</p>
@@ -35,6 +34,14 @@
     {% endfor %} {% else %}
     <p>no comments yet</p>
     {% endif %}
+    <hr />
+    <form action="{% url 'main:addcomment' %}" method="post">
+      {% csrf_token %}
+      <p>add new comment</p>
+      <input type="text" name="content" id="comment_content" />
+      <input type="hidden" name="id" value="{{post.id}}" />
+      <input type="submit" value="Send" />
+    </form>
   </div>
 </div>
 
