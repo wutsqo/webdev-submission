@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from tinymce.models import HTMLField
+import readtime
 
 
 class Post(models.Model):
@@ -20,12 +21,15 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_readtime(self):
+        return readtime.of_html(self.content)
+
     class Meta:
         ordering = ["-date_created"]
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments")
     content = models.CharField(max_length=1000)
     date_created = models.DateTimeField(auto_now_add=True)
 

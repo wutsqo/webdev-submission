@@ -1,0 +1,41 @@
+{% extends 'base.html' %} {% load humanize %} {% load static %} {% block meta %}
+<title>Blog App</title>
+{% endblock meta %} {% block content %}
+<div class="container py-5" style="max-width: 650px">
+  <h1>{{post.title}}</h1>
+  <hr />
+  <p>{{post.short_desc}}</p>
+  <hr />
+
+  <p>
+    <i class="fas fa-user"></i> &nbsp; {{post.author}}
+    <br />
+    <i class="fas fa-calendar-day"></i> &nbsp; {{post.date_created|naturaltime}}
+    <br />
+    <i class="fas fa-clock"></i> &nbsp; {{post.get_readtime}}
+  </p>
+  <hr />
+  <div>{{post.content|safe}}</div>
+  <hr />
+  <div>
+    <h4>Comments</h4>
+    <br />
+    {% if comments %} {% for comment in comments %}
+    <div class="card">
+      <div class="card-body">
+        <small>
+          <i class="fas fa-clock"></i> &nbsp;
+          {{comment.date_created|naturaltime}} - {% if comment.account %} User
+          {% else %} Anon {% endif %}
+        </small>
+        <hr />
+        <p>{{comment.content}}</p>
+      </div>
+    </div>
+    {% endfor %} {% else %}
+    <p>no comments yet</p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock content %}

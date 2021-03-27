@@ -10,7 +10,7 @@
 </script>
 -->
 {% endblock meta %} {% block content %}
-<div class="container py-5">
+<div class="container py-5" style="max-width: 650px">
   <h1>Blog App</h1>
   <div>
     <a href="#" class="btn btn-outline-primary">Add new blog post</a>
@@ -19,16 +19,17 @@
   <div class="card my-3">
     <div class="card-body">
       <h2>{{ post.title }}</h2>
-      <small><i class="fas fa-user"></i> {{post.author}}</small> <br />
-      <small
-        ><i class="fas fa-calendar-day"></i>
-        {{post.date_created|naturaltime}}</small
-      >
-
-      <!--<small><i class="fas fa-clock"></i></small>-->
+      <small> <i class="fas fa-user"></i> &nbsp; {{post.author}} </small>
+      <br />
+      <small>
+        <i class="fas fa-calendar-day"></i> &nbsp;
+        {{post.date_created|naturaltime}}
+      </small>
+      <br />
+      <small><i class="fas fa-clock"></i> &nbsp; {{post.get_readtime}}</small>
       <hr />
       <p>{{post.short_desc}}</p>
-      <a href="#">read more</a>
+      <a href="{% url 'main:detail' post.slug %}">read more</a>
     </div>
   </div>
   {% endfor %}
