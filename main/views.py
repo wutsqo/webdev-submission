@@ -13,8 +13,12 @@ def home(request):
     return render(request, "main/home.html", context)
 
 
-def detail(request, slug):
-    post = get_object_or_404(Post, slug=slug)
+def detail(request, author, slug):
+    try:
+        author = User.objects.get(username=author)
+    except:
+        author = None
+    post = get_object_or_404(Post, slug=slug, author=author)
     comments = post.comments.all()
     context = {"post": post, "comments": comments}
     return render(request, "main/detail.html", context)
@@ -61,3 +65,46 @@ def add_post(request):
                 "Post succesfully added",
             )
             return redirect("main:home")
+
+
+@login_required
+def edit(request):
+    if request.method == "POST":
+        user = User.objects.get_by_natural_key(request.user.username)
+        id = request.POST.get("id")
+        post = Post.objects.get(id=id)
+        if post.author == user:
+            return render(request, "main/editpost.html", {"post": post})
+
+
+@login_required
+def update(request):
+    if request.method == "POST":
+        user = User.objects.get_by_natural_key(request.user.username)
+        id = request.POST.get("id")
+        post = Post.objects.get(id=id)
+        if post.author == user:
+            post.title = request.POST.get("title")
+            post.content = request.POST.get("content")
+            post.short_desc = request.POST.get("short_desc")
+            post.save()
+    return redirect("main:dashboard")
+
+
+@login_required
+def dashboard(request):
+    user = User.objects.get_by_natural_key(request.user.username)
+    posts = Post.objects.filter(author=user)
+    return render(request, "main/dashboard.html", {"posts": posts})
+
+
+@login_required
+def delete(request):
+    if request.method == "POST":
+        user = User.objects.get_by_natural_key(request.user.username)
+        id = request.POST.get("id")
+        post = Post.objects.get(id=id)
+        if post.author == user:
+            post.delete()
+
+    return redirect("main:dashboard")

@@ -1,0 +1,71 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% load static %}
+<!---->
+{% block meta %}
+<title>Edit Post</title>
+<script
+  src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"
+  referrerpolicy="origin"
+></script>
+<script>
+  tinymce.init({ selector: "textarea" });
+</script>
+{% endblock meta %} {% block content %}
+<div class="container py-5" style="max-width: 650px">
+  {% include 'main/messages.html' %}
+  <div class="row">
+    <div class="col">
+      <h3>Edit post</h3>
+      <hr />
+      <form method="post" action="{% url 'main:update' %}">
+        {% csrf_token %}
+        <div id="div_id_title" class="control-group">
+          <label for="id_title" class="control-label requiredField">
+            Title<span class="asteriskField">*</span>
+          </label>
+          <div class="controls">
+            <input
+              type="text"
+              name="title"
+              maxlength="500"
+              class="textinput textInput"
+              required=""
+              id="id_title"
+              value="{{post.title}}"
+            />
+          </div>
+        </div>
+        <div id="div_id_content" class="control-group">
+          <label for="id_content" class="control-label requiredField">
+            Title<span class="asteriskField">*</span>
+          </label>
+          <div class="controls">
+            <textarea name="content" id="id_content" cols="30" rows="10">
+              {{post.content}}
+            </textarea>
+          </div>
+        </div>
+        <div id="div_id_short_desc" class="control-group">
+          <label for="id_short_desc" class="control-label requiredField">
+            Short desc<span class="asteriskField">*</span>
+          </label>
+          <div class="controls">
+            <input
+              type="text"
+              name="short_desc"
+              value="no description"
+              maxlength="500"
+              class="textinput textInput"
+              required=""
+              id="id_short_desc"
+            />
+          </div>
+        </div>
+        <br />
+        <input type="hidden" name="id" value="{{post.id}}" />
+        <button type="submit" class="btn btn-sm btn-primary">Add</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

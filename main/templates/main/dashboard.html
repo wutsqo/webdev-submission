@@ -2,18 +2,7 @@
 <title>Blog App</title>
 {% endblock meta %} {% block content %}
 <div class="container py-5" style="max-width: 650px">
-  <h1>Blog App</h1>
-  {% include 'main/messages.html' %}
-  <div>
-    {% if user.is_authenticated %}
-    <a href="{% url 'main:new' %}">+ add new post</a>
-    {% else %}
-    <a href="{% url 'main:login' %}">login</a> or
-    <a href="{% url 'main:register' %}">register</a> to add new post.
-    <!---->
-    {% endif %}
-  </div>
-
+  <h1>My Posts</h1>
   {% for post in posts %}
   <div class="card my-3">
     <div class="card-body">
@@ -29,6 +18,16 @@
       <hr />
       <p>{{post.short_desc}}</p>
       <a href="{% url 'main:detail' post.author post.slug %}">read more</a>
+      <form action="{% url 'main:delete' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{post.id}}" />
+        <input type="submit" value="delete post" />
+      </form>
+      <form action="{% url 'main:edit' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{post.id}}" />
+        <input type="submit" value="edit post" />
+      </form>
     </div>
   </div>
   {% endfor %}
